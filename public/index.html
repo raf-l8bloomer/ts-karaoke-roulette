@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Web site created using create-snowpack-app" />
+    <meta
+      name="description"
+      content="Web site created using create-snowpack-app"
+    />
     <link rel="stylesheet" type="text/css" href="/index.css" />
     <script type="module" src="/dist/index.js"></script>
     <title>Snowpack App</title>
@@ -12,22 +15,27 @@
   <body>
     <div class="border">
       <header>
-          <h1 class="title">Karaoke Roulette</h1>
-          <h2 class="description">Spin the roulette and select a song that pairs well with the prompt.</h2>
+        <h1 class="title">Karaoke Roulette</h1>
+        <h2 class="description">
+          Spin the roulette and select a song that pairs well with the prompt.
+        </h2>
       </header>
       <!-- <section class="interaction"> -->
-          <span>
-              <p class="prompt">PROMPT HERE</p>
-          </span>
+      <span>
+        <p class="prompt">PROMPT HERE</p>
+      </span>
 
       <!-- </section> -->
       <div class="options">
-          <button class="button" id="spin">Spin</button>
-          <button class="button" id="complete">Complete</button>
+        <button class="button" id="spin">Spin</button>
+        <button class="button" id="complete">Complete</button>
       </div>
       <!-- add new prompts-->
-      <label for="newPrompt">Add new prompts</label>
-      <input type ="text" id="newPrompt">
-      <input type="submit" id="submit" value="Add">
+      <form id="new-prompt-form">
+        <label for="newPrompt">Add new prompts</label>
+        <input type="text" id="newPrompt" />
+        <button type="submit">Add</button>
+      </form>
+    </div>
   </body>
 </html>

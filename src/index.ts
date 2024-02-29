@@ -45,7 +45,8 @@ let completedPrompts: Prompt[] = [];
 const promptEl = document.querySelector<HTMLElement>('.prompt')!;
 const spinEl = document.querySelector<HTMLButtonElement>('#spin')!;
 const completeEl = document.querySelector<HTMLButtonElement>('#complete');
-
+const submitInput = document.querySelector<HTMLInputElement>('#newPrompt');
+const form = document.querySelector<HTMLFormElement>('#new-prompt-form');
 let currentPrompt: Prompt | null;
 
 function randomPrompt(arr: Prompt[]) {
@@ -65,14 +66,14 @@ function generatePrompt() {
 }
 
 function removePrompt(arr: Prompt[]) {
-  if (currentPrompt != null) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].id === currentPrompt.id) {
-        console.log(arr[i].id);
-        // completedPrompts = arr.slice([i]);
-      }
-    }
-    console.log(completedPrompts);
+  if (currentPrompt !== null) {
+    completedPrompts.push(currentPrompt);
+    const completedIndex = arr.findIndex(
+      (prompt) => prompt.id === currentPrompt!.id,
+    );
+    console.log(completedIndex);
+    arr.splice(completedIndex, 1);
+    console.log(arr);
   }
 }
 
@@ -88,12 +89,47 @@ spinEl?.addEventListener('click', () => {
 
 // pull out the currentPrompt from the promptBank and move it to completed while spinning the wheel for the next prompt
 completeEl?.addEventListener('click', () => {
-  if (currentPrompt !== null) {
-    completedPrompts.push(currentPrompt);
-    const completedIndex = promptBank.findIndex(prompt => prompt.id === currentPrompt!.id)
-    console.log(completedIndex);
-    promptBank.splice(completedIndex, 1);
-  }
-  console.log(completedPrompts);
-  console.log(promptBank);
+  removePrompt(promptBank);
+  clearPrompt();
+  randomPrompt(promptBank);
+  generatePrompt();
 });
+
+form?.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  if (submitInput?.value == '' || submitInput?.value == null) return;
+
+  const newPrompt: Prompt = {
+    id: uuidV4(),
+    theme: submitInput.value,
+  };
+
+  promptBank.push(newPrompt);
+
+  submitInput.value = '';
+
+  console.log(promptBank);
+
+  // create list item
+});
+
+/**
+ * Now need a front end UL and when adding,
+ * create a new list item
+ * with an edit button
+ * and remove button
+ *
+ *
+ *
+ * it'll be like createElement
+ * ${}
+ */
+
+/** 
+ * 
+ * <p>NEW THEME<p>
+<button>Edit</button> <button>Remove</button>
+ * 
+ * 
+*/
