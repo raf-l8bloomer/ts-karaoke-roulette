@@ -7,6 +7,7 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "ignoreDeprecations" : "5.0",
+    "outDir":"./dest",
     /* paths - import rewriting/resolving */
     "paths": {
       // If you configured any Snowpack aliases, add them here.
