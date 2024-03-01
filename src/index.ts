@@ -65,20 +65,23 @@ function generatePrompt() {
   }
 }
 
-function removePrompt(arr: Prompt[]) {
-  if (currentPrompt !== null) {
-    completedPrompts.push(currentPrompt);
-    const completedIndex = arr.findIndex(
-      (prompt) => prompt.id === currentPrompt!.id,
-    );
-    console.log(completedIndex);
-    arr.splice(completedIndex, 1);
-    console.log(arr);
-  }
-}
+// function removeCompletedPrompt(arr: Prompt[]) {
+//   if (currentPrompt !== null) {
+//     completedPrompts.push(currentPrompt);
+//     const completedIndex = arr.findIndex(
+//       (prompt) => prompt.id === currentPrompt!.id,
+//     );
+//     console.log(completedIndex);
+//     arr.splice(completedIndex, 1);
+//     console.log(arr);
+//   }
+// }
 
-function extractObject(arr: Prompt[], id: string) {
-  return arr.filter((row) => row.id === id).pop();
+function removePrompt(arr: Prompt[], prompt: Prompt) {
+  const promptIndex = arr.findIndex((row) => row.id === prompt.id);
+  console.log(promptIndex);
+  promptBank.splice(promptIndex, 1);
+  console.log(arr);
 }
 
 spinEl?.addEventListener('click', () => {
@@ -89,7 +92,10 @@ spinEl?.addEventListener('click', () => {
 
 // pull out the currentPrompt from the promptBank and move it to completed while spinning the wheel for the next prompt
 completeEl?.addEventListener('click', () => {
-  removePrompt(promptBank);
+  if (currentPrompt !== null) {
+    completedPrompts.push(currentPrompt);
+    removePrompt(promptBank, currentPrompt);
+  }
   clearPrompt();
   randomPrompt(promptBank);
   generatePrompt();
@@ -106,18 +112,60 @@ form?.addEventListener('submit', (e) => {
   };
 
   promptBank.push(newPrompt);
+  createLi(newPrompt);
 
   submitInput.value = '';
 
   console.log(promptBank);
 
-  // create list item
 });
+
+const bank = document.querySelector<HTMLDivElement>('.bank');
+const bankUl = document.querySelector<HTMLUListElement>('ul');
+const showBank = document.querySelector<HTMLButtonElement>('.show-bank');
+
+function createLi(prompt: Prompt) {
+  const promptLi = document.createElement('li');
+  const remove = document.createElement('button');
+  promptLi.textContent = prompt.theme;
+  remove.textContent = 'Remove';
+  promptLi.appendChild(remove);
+  bankUl?.appendChild(promptLi);
+
+  remove.addEventListener('click', () => {
+    bankUl?.removeChild(promptLi);
+    const promptIndex = promptBank.findIndex(
+      (bankTheme) => bankTheme.id === prompt.id,
+    );
+    console.log(promptIndex);
+    promptBank.splice(promptIndex, 1);
+    console.log(promptBank);
+  });
+}
+
+function renderBank(arr: Prompt[]) {
+  arr.forEach((row) => {
+    createLi(row);
+  });
+}
+
+showBank?.addEventListener('click', () => {
+  if (showBank.textContent == 'Show Prompt Bank') {
+    bank!.style.display = 'flex';
+    showBank.textContent = 'Hide Prompt Bank';
+  } else if (showBank.textContent == 'Hide Prompt Bank') {
+    bank!.style.display = 'none';
+    showBank.textContent = 'Show Prompt Bank';
+  }
+});
+
+// render bank upon load
+renderBank(promptBank);
 
 /**
  * Now need a front end UL and when adding,
  * create a new list item
- * with an edit button
+ * with an edit button - optionAllllll, or after
  * and remove button
  *
  *
