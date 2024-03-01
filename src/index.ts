@@ -1,10 +1,27 @@
 import { v4 as uuidV4 } from 'uuid';
 
+/*************
+ * VARIABLES
+ ************/
+
+const promptEl = document.querySelector<HTMLElement>('.prompt')!;
+const spinEl = document.querySelector<HTMLButtonElement>('#spin')!;
+const completeEl = document.querySelector<HTMLButtonElement>('#complete');
+const submitInput = document.querySelector<HTMLInputElement>('#newPrompt');
+const form = document.querySelector<HTMLFormElement>('#new-prompt-form');
+const bank = document.querySelector<HTMLDivElement>('.bank');
+const bankUl = document.querySelector<HTMLUListElement>('ul');
+const showBank = document.querySelector<HTMLButtonElement>('.show-bank');
+
+let completedPrompts: Prompt[] = [];
+let currentPrompt: Prompt | null;
+
 type Prompt = {
   id: string;
   theme: string;
 };
 
+// preloaded prompts
 const promptBank: Prompt[] = [
   { id: uuidV4(), theme: "You want a '4 Chair Turn' on The Voice" },
   {
@@ -40,50 +57,47 @@ const promptBank: Prompt[] = [
   { id: uuidV4(), theme: 'I work like a dog DAY AND NIGHT' },
 ];
 
-let completedPrompts: Prompt[] = [];
+/*************
+ * FUNCTIONS
+ ************/
 
-const promptEl = document.querySelector<HTMLElement>('.prompt')!;
-const spinEl = document.querySelector<HTMLButtonElement>('#spin')!;
-const completeEl = document.querySelector<HTMLButtonElement>('#complete');
-const submitInput = document.querySelector<HTMLInputElement>('#newPrompt');
-const form = document.querySelector<HTMLFormElement>('#new-prompt-form');
-let currentPrompt: Prompt | null;
-
+// sets random currentPrompt from PromptBank
 function randomPrompt(arr: Prompt[]) {
   let randomPromptIndex: number = Math.floor(Math.random() * arr.length) + 1;
   currentPrompt = arr[randomPromptIndex];
 }
 
+// removes displayed prompt nad nullifies currentPrompt
 function clearPrompt() {
   currentPrompt = null;
   promptEl.innerHTML = '';
 }
 
+// adds currentPrompt to the HTML
 function generatePrompt() {
   if (currentPrompt != null) {
     promptEl.innerHTML += currentPrompt.theme;
   }
 }
 
-// function removeCompletedPrompt(arr: Prompt[]) {
-//   if (currentPrompt !== null) {
-//     completedPrompts.push(currentPrompt);
-//     const completedIndex = arr.findIndex(
-//       (prompt) => prompt.id === currentPrompt!.id,
-//     );
-//     console.log(completedIndex);
-//     arr.splice(completedIndex, 1);
-//     console.log(arr);
-//   }
-// }
-
+// finds index of prompt by matching id  to current prompt and removes 1 prompt from the bank
 function removePrompt(arr: Prompt[], prompt: Prompt) {
   const promptIndex = arr.findIndex((row) => row.id === prompt.id);
-  console.log(promptIndex);
   promptBank.splice(promptIndex, 1);
-  console.log(arr);
 }
 
+// render promptBank to HTML
+function renderBank(arr: Prompt[]) {
+  arr.forEach((row) => {
+    createLi(row);
+  });
+}
+
+/*************
+ * EVENT LISTENERS
+ ************/
+
+// clears prompt, randomly selects prompt from the bank, and displays it
 spinEl?.addEventListener('click', () => {
   clearPrompt();
   randomPrompt(promptBank);
@@ -101,6 +115,7 @@ completeEl?.addEventListener('click', () => {
   generatePrompt();
 });
 
+// takes input value and turns it into a new prompt, adds it to the bank, and displays it in bank
 form?.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -116,14 +131,9 @@ form?.addEventListener('submit', (e) => {
 
   submitInput.value = '';
 
-  console.log(promptBank);
-
 });
 
-const bank = document.querySelector<HTMLDivElement>('.bank');
-const bankUl = document.querySelector<HTMLUListElement>('ul');
-const showBank = document.querySelector<HTMLButtonElement>('.show-bank');
-
+// creates prompt into a list item with a remove button to remove it from the list and the bank
 function createLi(prompt: Prompt) {
   const promptLi = document.createElement('li');
   const remove = document.createElement('button');
@@ -141,14 +151,10 @@ function createLi(prompt: Prompt) {
     promptBank.splice(promptIndex, 1);
     console.log(promptBank);
   });
+
 }
 
-function renderBank(arr: Prompt[]) {
-  arr.forEach((row) => {
-    createLi(row);
-  });
-}
-
+//toggle Prompt Bank display
 showBank?.addEventListener('click', () => {
   if (showBank.textContent == 'Show Prompt Bank') {
     bank!.style.display = 'flex';
@@ -159,25 +165,9 @@ showBank?.addEventListener('click', () => {
   }
 });
 
+/*************
+ * FUNCTION CALL
+ ************/
+
 // render bank upon load
 renderBank(promptBank);
-
-/**
- * Now need a front end UL and when adding,
- * create a new list item
- * with an edit button - optionAllllll, or after
- * and remove button
- *
- *
- *
- * it'll be like createElement
- * ${}
- */
-
-/** 
- * 
- * <p>NEW THEME<p>
-<button>Edit</button> <button>Remove</button>
- * 
- * 
-*/
