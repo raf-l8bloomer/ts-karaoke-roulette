@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'Dance-Floor';
+  src: url('assets/Dance Floor.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto-Mono';
+  src: url('assets/RobotoMono-VariableFont_wght.woff2') format('woff2');
+}
+
+$heading-stack: 'Dance-Floor', Arial, Helvetica, sans-serif;
+$mono-stack: 'Roboto-Mono', 'Courier New', Courier, monospace;
+
+h1 {
+  font-family: $heading-stack;
+  font-size: calc(2em + 2vw);
+}
+
+h2,
+h3,
+p {
+  font-family: $mono-stack;
+}
+
+.border {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 3fr 1fr 2fr 3fr;
+}
+
+header{
+  background-color: blue;
+}
+
+.prompt-div {
+  background-color: pink;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+}
+#spin {
+  width: 50%;
+  border-radius: 50%;
+}
+
+#complete {
+  width: 50%;
+  border-radius: 10%;
+}
+
+
+.bank {
+  display: none;
+}

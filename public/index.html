@@ -8,7 +8,7 @@
       name="description"
       content="Web site created using create-snowpack-app"
     />
-    <link rel="stylesheet" type="text/css" href="/index.css" />
+    <link rel="stylesheet" type="text/css" href="/output.css" />
     <script type="module" src="/dist/index.js"></script>
     <title>Snowpack App</title>
   </head>
@@ -21,28 +21,28 @@
         </h2>
       </header>
       <!-- <section class="interaction"> -->
-      <span>
-        <p class="prompt">PROMPT HERE</p>
-      </span>
+      <div class="prompt-div">
+        <h3 class="prompt">PROMPT HERE</h3>
+      </div>
 
       <!-- </section> -->
       <div class="options">
-        <button class="button" id="spin">Spin</button>
         <button class="button" id="complete">Complete</button>
+        <button class="button" id="spin">Spin</button>
       </div>
       <!-- add new prompts-->
       <form id="new-prompt-form">
-        <label for="newPrompt">Add new prompts</label>
-        <input type="text" id="newPrompt" />
+        <!-- <label for="newPrompt">Add new prompts</label> -->
+        <input type="text" id="newPrompt" placeholder="Add new prompts"/>
         <button type="submit">Add</button>
       </form>
 
       <section>
         <button class="show-bank">Show Prompt Bank</button>
         <div class="bank">
-        <h2>Prompt Bank</h2>
-        <ul></ul>
-      </div>
+          <h2>Prompt Bank</h2>
+          <ul></ul>
+        </div>
       </section>
     </div>
   </body>
