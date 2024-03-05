@@ -128,6 +128,7 @@ spinEl?.addEventListener('click', () => {
   if (currentPrompt !== null) {
 promptDiv!.style.backgroundColor = "#ffffff";
 promptDiv!.style.border = "1px solid #F10ADF";
+promptEl!.style.color = "#F10ADF";
 
   }
 });
@@ -180,3 +181,12 @@ showBank?.addEventListener('click', () => {
 
 // render bank upon load
 renderBank(promptBank);
+
+
+/**
+ * 1. Add saving to local storage functionality
+ * 2. Add sidePanel functionality for chrome ext
+ * 3. deploy and test on iphone
+ * 4. test on web
+ * 5. 
+ */
