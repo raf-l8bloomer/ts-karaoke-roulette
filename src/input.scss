@@ -1,15 +1,31 @@
 @font-face {
   font-family: 'Dance-Floor';
-  src: url('assets/Dance Floor.woff2') format('woff2');
+  src: url('assets/Dance-Floor.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Roboto-Mono';
-  src: url('assets/RobotoMono-VariableFont_wght.woff2') format('woff2');
+  font-family: 'Roboto Mono';
+  src: url('../assets/RobotoMono-VariableFont_wght.woff2') format('woff2');
 }
 
 $heading-stack: 'Dance-Floor', Arial, Helvetica, sans-serif;
-$mono-stack: 'Roboto-Mono', 'Courier New', Courier, monospace;
+$mono-stack: 'Roboto Mono';
+$light-grey: #EFEFEF;
+$grey: #d9d9d9;
+$green:#00F000;
+$pink: #F10ADF;
+$blue: #1C26F8;
+
+$opacity: 0.6;
+
+$border-radius: 10px;
+
+body {
+  width: 380px;
+}
+
+@media screen and (max-width: 600px) {
+  
 
 h1 {
   font-family: $heading-stack;
@@ -18,39 +34,156 @@ h1 {
 
 h2,
 h3,
-p {
+button,
+input, li {
   font-family: $mono-stack;
+  text-transform: uppercase;
 }
 
-.border {
+h2 {
+  font-size: 1em;
+}
+
+
+
+.container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 3fr 1fr 2fr 3fr;
+  grid-template-rows: 300px 100px 200px 200px;
+  gap: 5px;
 }
 
-header{
-  background-color: blue;
+header {
+  background-color: $grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  border-radius: $border-radius;
 }
 
 .prompt-div {
-  background-color: pink;
+  background-color: $grey;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.prompt h3 {
+  font-size: calc(1em + 1vw);
+  text-align: center;
 }
 
 .options {
   display: flex;
   flex-direction: row;
+  gap: 5px;
 }
 #spin {
-  width: 50%;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
+  border: none;
+  background-color: $grey;
+}
+
+#spin:hover {
+  background-color:$pink;
+  opacity: background-color $opacity;
 }
 
 #complete {
   width: 50%;
   border-radius: 10%;
+  border: none;
+  background-color: $grey;
+}
+
+#complete:hover {
+background-color: $blue;
+opacity: background-color $opacity;
+
 }
 
 
+input {
+  height: 100%;
+  width: 70%;
+  font-size: calc(5em + 1vw);
+  border: none;
+}
+input[type=text]{
+  color: $green;
+}
+
+input:focus {
+  outline: $green;
+  background-color: #EFEFEF;
+  border-radius: $border-radius;
+  border: 1px solid $green;
+}
+
+input::placeholder {
+  font-size: calc(0.2em + 1vw);
+  position: absolute;
+  top: 40%;
+}
+
+.new-prompt-form {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+#add {
+  height: 100%;
+  width: 30%;
+  border: none;
+  border-radius: $border-radius;
+  background-color: $grey;
+  opacity: background-color $opacity;
+
+}
+
+#add:hover {
+  background-color: $green;
+  opacity: background-color $opacity;
+}
+
+.show-bank  {
+  width: 100%;
+  border-radius: $border-radius;
+  border: none;
+  background-color: $grey;
+
+
+}
 .bank {
   display: none;
+}
+
+.removePrompt {
+  // background-color: red;
+  order: -1;
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+}
+
+ul {
+  margin-left: 0;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  gap: 10px;
+
+}
+
 }

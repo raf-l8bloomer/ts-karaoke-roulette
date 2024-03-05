@@ -4,11 +4,12 @@ import { v4 as uuidV4 } from 'uuid';
  * VARIABLES
  ************/
 
+const promptDiv = document.querySelector<HTMLDivElement>('.prompt-div');
 const promptEl = document.querySelector<HTMLElement>('.prompt')!;
 const spinEl = document.querySelector<HTMLButtonElement>('#spin')!;
 const completeEl = document.querySelector<HTMLButtonElement>('#complete');
 const submitInput = document.querySelector<HTMLInputElement>('#newPrompt');
-const form = document.querySelector<HTMLFormElement>('#new-prompt-form');
+const form = document.querySelector<HTMLFormElement>('.new-prompt-form');
 const bank = document.querySelector<HTMLDivElement>('.bank');
 const bankUl = document.querySelector<HTMLUListElement>('ul');
 const showBank = document.querySelector<HTMLButtonElement>('.show-bank');
@@ -93,6 +94,28 @@ function renderBank(arr: Prompt[]) {
   });
 }
 
+// creates prompt into a list item with a remove button to remove it from the list and the bank
+function createLi(prompt: Prompt) {
+  const promptLi = document.createElement('li');
+  const remove = document.createElement('button');
+  remove.classList.add('removePrompt');
+  promptLi.textContent = prompt.theme;
+  remove.textContent = 'X';
+  promptLi.appendChild(remove);
+  bankUl?.appendChild(promptLi);
+
+  remove.addEventListener('click', () => {
+    bankUl?.removeChild(promptLi);
+    const promptIndex = promptBank.findIndex(
+      (bankTheme) => bankTheme.id === prompt.id,
+    );
+    console.log(promptIndex);
+    promptBank.splice(promptIndex, 1);
+    console.log(promptBank);
+  });
+
+}
+
 /*************
  * EVENT LISTENERS
  ************/
@@ -102,6 +125,11 @@ spinEl?.addEventListener('click', () => {
   clearPrompt();
   randomPrompt(promptBank);
   generatePrompt();
+  if (currentPrompt !== null) {
+promptDiv!.style.backgroundColor = "#ffffff";
+promptDiv!.style.border = "1px solid #F10ADF";
+
+  }
 });
 
 // pull out the currentPrompt from the promptBank and move it to completed while spinning the wheel for the next prompt
@@ -133,26 +161,7 @@ form?.addEventListener('submit', (e) => {
 
 });
 
-// creates prompt into a list item with a remove button to remove it from the list and the bank
-function createLi(prompt: Prompt) {
-  const promptLi = document.createElement('li');
-  const remove = document.createElement('button');
-  promptLi.textContent = prompt.theme;
-  remove.textContent = 'Remove';
-  promptLi.appendChild(remove);
-  bankUl?.appendChild(promptLi);
 
-  remove.addEventListener('click', () => {
-    bankUl?.removeChild(promptLi);
-    const promptIndex = promptBank.findIndex(
-      (bankTheme) => bankTheme.id === prompt.id,
-    );
-    console.log(promptIndex);
-    promptBank.splice(promptIndex, 1);
-    console.log(promptBank);
-  });
-
-}
 
 //toggle Prompt Bank display
 showBank?.addEventListener('click', () => {

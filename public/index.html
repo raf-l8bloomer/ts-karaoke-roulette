@@ -13,16 +13,17 @@
     <title>Snowpack App</title>
   </head>
   <body>
-    <div class="border">
+    <div class="container">
       <header>
         <h1 class="title">Karaoke Roulette</h1>
         <h2 class="description">
-          Spin the roulette and select a song that pairs well with the prompt.
+          Spin the roulette and select a song that pairs well with the prompt. Add new ones or remove them from the Prompt Bank.
+          Hit 'complete' when you're done and keep on singing! 
         </h2>
       </header>
       <!-- <section class="interaction"> -->
       <div class="prompt-div">
-        <h3 class="prompt">PROMPT HERE</h3>
+        <h3 class="prompt">Spin for prompt</h3>
       </div>
 
       <!-- </section> -->
@@ -31,16 +32,15 @@
         <button class="button" id="spin">Spin</button>
       </div>
       <!-- add new prompts-->
-      <form id="new-prompt-form">
+      <form class="new-prompt-form">
         <!-- <label for="newPrompt">Add new prompts</label> -->
         <input type="text" id="newPrompt" placeholder="Add new prompts"/>
-        <button type="submit">Add</button>
+        <button type="submit" id="add">Add</button>
       </form>
 
-      <section>
+      <section class="bank-container">
         <button class="show-bank">Show Prompt Bank</button>
         <div class="bank">
-          <h2>Prompt Bank</h2>
           <ul></ul>
         </div>
       </section>
