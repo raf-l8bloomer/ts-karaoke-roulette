@@ -114,7 +114,7 @@ function createLi(prompt: Prompt) {
       (bankTheme) => bankTheme.id === prompt.id,
     );
     promptBank.splice(promptIndex, 1);
-    
+
     //save bank to localStorage
     let saveBankString = JSON.stringify(promptBank);
     console.log(saveBankString);
@@ -191,7 +191,15 @@ showBank?.addEventListener('click', () => {
  ************/
 
 // render bank upon load
-renderBank(promptBank);
+
+let savedBankString = localStorage.getItem('bank');
+if (savedBankString) {
+  let savedBankArr = JSON.parse(savedBankString);
+
+  renderBank(savedBankArr);
+} else {
+  renderBank(promptBank);
+}
 
 /**
  * 1. Add saving to local storage functionality
