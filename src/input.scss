@@ -155,6 +155,10 @@ input::placeholder {
   background-color: $grey;
 }
 
+.show-bank:hover {
+  border: 1px solid $blue;
+}
+
 .bank {
   display: none;
 }
@@ -202,7 +206,7 @@ li {
   .container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 300px 100px 100px 100px 200px;
+    grid-template-rows: 300px 100px 250px 100px 200px;
     gap: 5px;
   }
 

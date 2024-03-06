@@ -85,6 +85,10 @@ function generatePrompt() {
 function removePrompt(arr: Prompt[], prompt: Prompt) {
   const promptIndex = arr.findIndex((row) => row.id === prompt.id);
   promptBank.splice(promptIndex, 1);
+  //save bank to localStorage
+  let saveBankString = JSON.stringify(promptBank);
+  localStorage.setItem('bank', saveBankString);
+  console.log(saveBankString);
 }
 
 // render promptBank to HTML
@@ -109,11 +113,13 @@ function createLi(prompt: Prompt) {
     const promptIndex = promptBank.findIndex(
       (bankTheme) => bankTheme.id === prompt.id,
     );
-    console.log(promptIndex);
     promptBank.splice(promptIndex, 1);
-    console.log(promptBank);
+    
+    //save bank to localStorage
+    let saveBankString = JSON.stringify(promptBank);
+    console.log(saveBankString);
+    localStorage.setItem('bank', saveBankString);
   });
-
 }
 
 /*************
@@ -126,10 +132,9 @@ spinEl?.addEventListener('click', () => {
   randomPrompt(promptBank);
   generatePrompt();
   if (currentPrompt !== null) {
-promptDiv!.style.backgroundColor = "#ffffff";
-promptDiv!.style.border = "1px solid #F10ADF";
-promptEl!.style.color = "#F10ADF";
-
+    promptDiv!.style.backgroundColor = '#ffffff';
+    promptDiv!.style.border = '1px solid #F10ADF';
+    promptEl!.style.color = '#F10ADF';
   }
 });
 
@@ -158,20 +163,26 @@ form?.addEventListener('submit', (e) => {
   promptBank.push(newPrompt);
   createLi(newPrompt);
 
+  //save bank to localStorage
+  let saveBankString = JSON.stringify(promptBank);
+  console.log(saveBankString);
+  localStorage.setItem('bank', saveBankString);
+
   submitInput.value = '';
-
 });
-
-
 
 //toggle Prompt Bank display
 showBank?.addEventListener('click', () => {
   if (showBank.textContent == 'Show Prompt Bank') {
     bank!.style.display = 'flex';
     showBank.textContent = 'Hide Prompt Bank';
+    showBank.style.backgroundColor = '#FFFFFF';
+    showBank.style.border = '1px solid #1c26f8 ';
   } else if (showBank.textContent == 'Hide Prompt Bank') {
     bank!.style.display = 'none';
     showBank.textContent = 'Show Prompt Bank';
+    showBank.style.backgroundColor = '#d9d9d9';
+    showBank.style.border = 'none';
   }
 });
 
@@ -182,11 +193,10 @@ showBank?.addEventListener('click', () => {
 // render bank upon load
 renderBank(promptBank);
 
-
 /**
  * 1. Add saving to local storage functionality
  * 2. Add sidePanel functionality for chrome ext
  * 3. deploy and test on iphone
  * 4. test on web
- * 5. 
+ * 5.
  */
